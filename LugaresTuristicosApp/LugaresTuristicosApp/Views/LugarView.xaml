@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ViewModel="clr-namespace:LugaresTuristicosApp.ViewModel"
+             x:Class="LugaresTuristicosApp.Views.LugarView" Title="Lugares turisticos">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="https://cdn-icons-png.flaticon.com/512/727/727570.png"
+                     Command="{Binding CambiarVistaCommand}"
+                     CommandParameter="agregar"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.BindingContext>
+        <ViewModel:LugarViewMode x:Name="LVM"/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <ContentView  Background="#51557E">
+            <ScrollView>
+                <StackLayout>
+                    <Frame>
+                        <StackLayout Orientation="Vertical">
+                            <Label HorizontalOptions="Center">Ordenar Por</Label>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <RadioButton Content="A-Z" GroupName="Ord" x:Name="OrdA"  CheckedChanged="OrdA_CheckedChanged"></RadioButton>
+                                <RadioButton Content="Z-A" GroupName="Ord" x:Name="OrdB"  CheckedChanged="OrdB_CheckedChanged"></RadioButton>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                    <CollectionView ItemsSource="{Binding Lugares}" x:Name="lst">
+                        <CollectionView.Style>
+                            <Style TargetType="CollectionView">
+                                <Setter Property="ItemTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <SwipeView  Background="#51557E">
+                                                <SwipeView.LeftItems>
+                                                    <SwipeItem Text="Editar" BackgroundColor="Blue"
+                                                               IconImageSource="https://cdn-icons-png.flaticon.com/512/1828/1828911.png"
+                                                               Command="{Binding Source={x:Reference LVM}, Path=ModificarCommand}" CommandParameter="{Binding .}"/>
+                                                </SwipeView.LeftItems>
+                                                <SwipeView.RightItems>
+                                                    <SwipeItem Text="Eliminar" BackgroundColor="Red" 
+                                                               IconImageSource="https://cdn-icons-png.flaticon.com/512/565/565491.png"
+                                                               Clicked="SwipeItem_Clicked"
+                                                               CommandParameter="{Binding .}"/>
+                                                </SwipeView.RightItems>
+                                                <Grid Margin="5" BackgroundColor="#816797" Background="#816797">
+
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={x:Reference LVM}, Path=VerDetallesCommand}" CommandParameter="{Binding .}"/>
+                                                    </Grid.GestureRecognizers>
+
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="0.3*"/>
+                                                        <ColumnDefinition Width="0.7*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="0.3*"/>
+                                                        <RowDefinition Height="0.2*"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Image Grid.Column="0" Grid.Row="0" Source="{Binding Imagen}"
+                                                           Aspect="Fill"
+                                                           Grid.RowSpan="3"/>
+
+                                                    <Label Grid.Column="1" Grid.Row="0"
+                                                           Text="{Binding Nombre}"
+                                                           FontSize="Body"
+                                                           VerticalOptions="Center"
+                                                           TextColor="#51557E"/>
+
+                                                    <Label Grid.Column="1" Grid.Row="1"
+                                                           FontSize="Subtitle"
+                                                           Text="{Binding Dirección}" 
+                                                           TextColor="#d2d2d2" FontAttributes="Bold"/>
+
+                                                    <Label Grid.Column="1" Grid.Row="2"
+                                                           Text="{Binding Descripcion}" 
+                                                           TextColor="White"/>
+                                                </Grid>
+                                            </SwipeView>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </CollectionView.Style>
+                    </CollectionView>
+                </StackLayout>
+            </ScrollView>
+        </ContentView>
+    </ContentPage.Content>
+
+</ContentPage>

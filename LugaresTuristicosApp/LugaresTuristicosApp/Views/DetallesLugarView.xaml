@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LugaresTuristicosApp.Views.DetallesLugarView">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Row="0" Source="{Binding Lugar.Imagen}"/>
+
+                <StackLayout Grid.Row="1" Padding="10">
+                    <Label Text="Nombre:"/>
+                    <Label Text="{Binding Lugar.Nombre}" FontSize="Body" FontAttributes="Bold"/>
+                    <Label Text="Dirección:"/>
+                    <Label Text="{Binding Lugar.Dirección}" FontSize="Body" FontAttributes="Bold"/>
+                    <Label Text="Descripción:"/>
+                    <Label Text="{Binding Lugar.Descripcion}" FontSize="Body" FontAttributes="Bold"/>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
